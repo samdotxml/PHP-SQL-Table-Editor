@@ -129,6 +129,24 @@ class TableEditor {
         }
     }
 
+    /**
+    * Set a regular expression to a specific attribute in a table. These get checked when doing any action on the table via editor
+    *
+    * @param arr   $arr array that you wanna check ($_POST)
+    * @param table   $table the table in question
+    * @author samdotxml <samdotxml@420blaze.it>
+    */
+    function validateInput(array $arr, string $table){
+        foreach($arr as $key => $val){
+            if(isset($this->attributeRegex[$table][$key])){
+                if(!preg_match($this->attributeRegex[$table][$key], $val)){
+                    echo "Invalid Input at " . $key . " does not match: " . $validates[$table][$key];
+                    throw new Exception('Input Validation Failed');
+                }
+            }
+        }
+    }
+
     #MySQL Methods
     public function deleteRow($table, $arr){
         $primaryKeyName = $this->table_primary_keys[$table][0];
