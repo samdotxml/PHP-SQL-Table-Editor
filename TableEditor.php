@@ -32,7 +32,7 @@ class TableEditor {
         return False;
     }
 
-    function printTables(){
+    public function printTables(){
         foreach($this->tables as $t){
             echo "<h1>$t</h1>";
             echo "<table border='3'>";
@@ -55,7 +55,7 @@ class TableEditor {
             $rowIndex = 1;
             $r2 = $this->mysqli->query("SELECT * FROM $t");
             while($row = $r2->fetch_array(MYSQLI_NUM)){
-                echo '<form action="" method="POST">';
+                echo '<form action="" method="POST">'; //Create form for each row
                 echo "<tr>";
                 
                 for($i = 0; $i < count($row); $i++){
