@@ -1,8 +1,13 @@
 <?php
 class TableEditor {
+    /**
+     * Class for the Tableditor
+     * @link       https://github.com/samdotxml/PHP-SQL-Table-Editor
+    */
     public array $tables;
-    public array $attributeRegex;
-    public array $table_primary_keys;
+
+    private array $attributeRegex;
+    private array $table_primary_keys;
     private mysqli $mysqli;
 
     function __construct(array $tables, mysqli $mysqli){
@@ -20,7 +25,16 @@ class TableEditor {
         $this->getPrimaryKeys();
     }
 
-    public function addRegexToAttribute($table, $attribute, $regex){
+    /**
+    * Set a regular expression to a specific attribute in a table. These get checked when doing any action on the table via editor
+    *
+    * @param table   $table the table name in your database
+    * @param attribute   $attribute the attribute name in your database
+    * @param regex   $regex the regular expression
+    * @author samdotxml <samdotxml@420blaze.it>
+    * @return Boolean
+    */
+    public function addRegexToAttribute(string $table, string $attribute, $regex){
         if(array_key_exists($table, $this->$attributeRegex)){
             $this->$attributeRegex[$table] += array($attribute => $regex);
             return True;
@@ -32,6 +46,23 @@ class TableEditor {
         return False;
     }
 
+    /**
+    * $arr parameter gets set to the $attributeRegex field in the class
+    *
+    * @param arr   $arr an array
+    * @author samdotxml <samdotxml@420blaze.it>
+    * @return Boolean
+    */
+    public function setRegexAttributes(array $arr){
+        $this->attributeRegex = $arr;
+        return True;
+    }
+
+    /**
+    * Echo's the table with the corresponding data. All rows are a form, with this you are able to do edits
+    *
+    * @author samdotxml <samdotxml@420blaze.it>
+    */
     public function printTables(){
         foreach($this->tables as $t){
             echo "<h1>$t</h1>";
@@ -98,7 +129,7 @@ class TableEditor {
         }
     }
 
-    #MySQL Methods#
+    #MySQL Methods
     public function deleteRow($table, $arr){
         $primaryKeyName = $this->table_primary_keys[$table][0];
         $primaryKeyValue = $arr[$primaryKeyName];

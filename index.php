@@ -1,5 +1,4 @@
 <?php
-include "connection.php";
 include "TableEditor.php";
 
 //Debug - Uncomment if you want to debug
@@ -9,6 +8,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 */
 
+//Define your Tables in this Array
 $TABLES = array("Personen", "Treffen", "Infektionen");
 $table_editor = new TableEditor($TABLES, $mysqli);
 
